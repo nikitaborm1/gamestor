@@ -27,6 +27,9 @@
             --font-body: 'Inter', 'Helvetica Neue', sans-serif;
             --gradient: linear-gradient(135deg, #7c5cff 0%, #ff5cd4 100%);
             --gradient-3: linear-gradient(135deg, #7c5cff, #ff5cd4, #00e5ff);
+            
+            /* КУРСОР В ВИДЕ ФОКСИ ИЗ FNAF (Векторный SVG) */
+            --foxy-cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><polygon points="4,10 -2,0 12,4" fill="%23a61c21" /><polygon points="28,10 34,0 20,4" fill="%23a61c21" /><path d="M4 10 C 4 10, 16 -2, 28 10 C 30 16, 30 24, 16 30 C 2 24, 2 16, 4 10 Z" fill="%23c1272d" stroke="%237a1215" stroke-width="1"/><path d="M 4 12 L 28 8" stroke="%23111" stroke-width="2"/><ellipse cx="16" cy="23" rx="9" ry="7" fill="%23e0e0e0" stroke="%23555" stroke-width="0.5"/><ellipse cx="16" cy="20" rx="3" ry="2" fill="%23111"/><path d="M 10 23 L 12 26 L 14 23 L 16 26 L 18 23 L 20 26 L 22 23" fill="%23fff" stroke="%23000" stroke-width="0.5"/><circle cx="11" cy="15" r="3.5" fill="%23fcd303"/><circle cx="11" cy="15" r="1.5" fill="%23111"/><circle cx="21" cy="14" r="4" fill="%23111" /><path d="M 28 25 L 31 28 L 28 28 L 31 31 L 25 28 Z" fill="%23c1272d" stroke="%237a1215" stroke-width="0.5"/></svg>') 4 4, auto;
         }
 
         body.light {
@@ -40,15 +43,18 @@
             --accent-3: #0098b3;
             --border: rgba(90,63,212,0.15);
             --border-strong: rgba(90,63,212,0.35);
+            /* Курсор для светлой темы */
+            --foxy-cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><polygon points="4,10 -2,0 12,4" fill="%23a61c21" /><polygon points="28,10 34,0 20,4" fill="%23a61c21" /><path d="M4 10 C 4 10, 16 -2, 28 10 C 30 16, 30 24, 16 30 C 2 24, 2 16, 4 10 Z" fill="%23c1272d" stroke="%237a1215" stroke-width="1"/><path d="M 4 12 L 28 8" stroke="%23111" stroke-width="2"/><ellipse cx="16" cy="23" rx="9" ry="7" fill="%23e0e0e0" stroke="%23555" stroke-width="0.5"/><ellipse cx="16" cy="20" rx="3" ry="2" fill="%23111"/><path d="M 10 23 L 12 26 L 14 23 L 16 26 L 18 23 L 20 26 L 22 23" fill="%23fff" stroke="%23000" stroke-width="0.5"/><circle cx="11" cy="15" r="3.5" fill="%23fcd303"/><circle cx="11" cy="15" r="1.5" fill="%23111"/><circle cx="21" cy="14" r="4" fill="%23111" /><path d="M 28 25 L 31 28 L 28 28 L 31 31 L 25 28 Z" fill="%23c1272d" stroke="%237a1215" stroke-width="0.5"/></svg>') 4 4, auto;
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
+        html, body {
             font-family: var(--font-body);
             color: var(--text);
             line-height: 1.6;
             min-height: 100vh;
+            cursor: var(--foxy-cursor); /* Применяем курсор Фокси */
             background-color: var(--bg);
             background-image:
                 radial-gradient(ellipse 70% 60% at 12% 0%, rgba(124,92,255,0.22), transparent 60%),
@@ -64,12 +70,16 @@
                 radial-gradient(ellipse 55% 55% at 88% 100%, rgba(0,152,179,0.10), transparent 60%);
         }
 
+        /* Курсор Фокси для кликабельных элементов, текстовый для полей ввода */
+        a, button, .card, select, .btn, .theme-toggle, .nav a, label { cursor: var(--foxy-cursor); }
+        input, textarea { cursor: text; }
+
         h1, h2, h3 { font-family: var(--font-heading); font-weight: 700; letter-spacing: -0.02em; }
-        a { color: var(--accent); text-decoration: none; cursor: pointer; }
+        a { color: var(--accent); text-decoration: none; }
         img { max-width: 100%; display: block; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-        /* ============ HEADER (glassmorphism) ============ */
+        /* ============ HEADER ============ */
         .header {
             background: rgba(20, 20, 31, 0.65);
             backdrop-filter: blur(20px) saturate(180%);
@@ -79,155 +89,53 @@
             transition: background .3s;
         }
         body.light .header { background: rgba(255, 255, 255, 0.7); }
-        .header__inner {
-            display: flex; align-items: center; justify-content: space-between;
-            height: 72px;
-        }
+        .header__inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
         .logo {
-            font-family: var(--font-heading);
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-            transition: filter .3s;
+            font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; letter-spacing: -0.03em;
+            background: var(--gradient); -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent; transition: filter .3s;
         }
         .logo:hover { filter: drop-shadow(0 0 12px rgba(124,92,255,0.6)); }
-        .logo span { /* сохраняем структуру, но обе части теперь в градиенте */ }
 
         .nav { display: flex; gap: 28px; list-style: none; align-items: center; }
-        .nav a {
-            color: var(--text-muted);
-            font-weight: 500;
-            font-size: 0.95rem;
-            position: relative;
-            padding: 6px 0;
-            transition: color .2s;
-        }
-        .nav a::after {
-            content: '';
-            position: absolute;
-            left: 0; right: 0; bottom: 0;
-            height: 2px;
-            background: var(--gradient);
-            border-radius: 2px;
-            transform: scaleX(0);
-            transform-origin: center;
-            transition: transform .25s ease;
-        }
+        .nav a { color: var(--text-muted); font-weight: 500; font-size: 0.95rem; position: relative; padding: 6px 0; transition: color .2s; }
+        .nav a::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--gradient); border-radius: 2px; transform: scaleX(0); transition: transform .25s ease; }
         .nav a:hover { color: var(--text); }
         .nav a:hover::after, .nav a.active::after { transform: scaleX(1); }
         .nav a.active { color: var(--accent); }
 
-        .burger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
-        .burger span {
-            display: block; width: 24px; height: 2px;
-            background: var(--text); margin: 5px 0;
-            border-radius: 2px;
-            transition: .3s;
-        }
+        .burger { display: none; background: none; border: none; padding: 8px; }
+        .burger span { display: block; width: 24px; height: 2px; background: var(--text); margin: 5px 0; border-radius: 2px; transition: .3s; }
 
         /* ============ SLIDER ============ */
-        .slider {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            gap: 20px;
-            padding: 28px 0;
-            scrollbar-width: none;
-        }
+        .slider { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 20px; padding: 28px 0; scrollbar-width: none; }
         .slider::-webkit-scrollbar { display: none; }
-
         .slide {
-            position: relative;
-            flex: 0 0 100%;
-            scroll-snap-align: start;
-            border-radius: 24px;
-            padding: 64px 48px;
-            min-height: 320px;
-            overflow: hidden;
-            display: flex; flex-direction: column; justify-content: center;
+            position: relative; flex: 0 0 100%; scroll-snap-align: start; border-radius: 24px; padding: 64px 48px;
+            min-height: 320px; overflow: hidden; display: flex; flex-direction: column; justify-content: center;
             background: linear-gradient(135deg, #2a1a4a 0%, #1a1a2e 60%, #1a1a35 100%);
             box-shadow: 0 24px 60px -20px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06);
         }
-        .slide::before {
-            content: ''; position: absolute; top: -40%; right: -15%;
-            width: 560px; height: 560px;
-            background: radial-gradient(circle, rgba(124,92,255,0.45), transparent 60%);
-            filter: blur(50px);
-            pointer-events: none;
-        }
-        .slide::after {
-            content: ''; position: absolute; bottom: -40%; left: -10%;
-            width: 460px; height: 460px;
-            background: radial-gradient(circle, rgba(255,92,212,0.35), transparent 60%);
-            filter: blur(50px);
-            pointer-events: none;
-        }
+        .slide::before { content: ''; position: absolute; top: -40%; right: -15%; width: 560px; height: 560px; background: radial-gradient(circle, rgba(124,92,255,0.45), transparent 60%); filter: blur(50px); pointer-events: none; }
+        .slide::after { content: ''; position: absolute; bottom: -40%; left: -10%; width: 460px; height: 460px; background: radial-gradient(circle, rgba(255,92,212,0.35), transparent 60%); filter: blur(50px); pointer-events: none; }
         .slide > * { position: relative; z-index: 1; }
-        .light .slide {
-            background: linear-gradient(135deg, #e8e0ff 0%, #f0f0ff 60%, #f5f5ff 100%);
-            box-shadow: 0 24px 60px -20px rgba(90,63,212,0.25), inset 0 1px 0 rgba(255,255,255,0.8);
-        }
+        .light .slide { background: linear-gradient(135deg, #e8e0ff 0%, #f0f0ff 60%, #f5f5ff 100%); box-shadow: 0 24px 60px -20px rgba(90,63,212,0.25), inset 0 1px 0 rgba(255,255,255,0.8); }
         .light .slide::before { background: radial-gradient(circle, rgba(124,92,255,0.25), transparent 60%); }
         .light .slide::after { background: radial-gradient(circle, rgba(255,92,212,0.2), transparent 60%); }
 
-        .slide__badge {
-            display: inline-block;
-            align-self: flex-start;
-            padding: 6px 14px;
-            margin-bottom: 16px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 999px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-            text-transform: uppercase;
-            color: #fff;
-        }
-        .light .slide__badge {
-            background: rgba(90,63,212,0.12);
-            border-color: rgba(90,63,212,0.25);
-            color: var(--accent);
-        }
-
-        .slide h2 {
-            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-            line-height: 1.1;
-            margin-bottom: 12px;
-            background: var(--gradient-3);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-            max-width: 600px;
-        }
+        .slide__badge { display: inline-block; align-self: flex-start; padding: 6px 14px; margin-bottom: 16px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); border-radius: 999px; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; color: #fff; }
+        .light .slide__badge { background: rgba(90,63,212,0.12); border-color: rgba(90,63,212,0.25); color: var(--accent); }
+        .slide h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); line-height: 1.1; margin-bottom: 12px; background: var(--gradient-3); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; max-width: 600px; }
         .slide p { color: var(--text-muted); max-width: 500px; font-size: 1.05rem; }
 
         /* ============ СЕТКА ============ */
         .grid { display: grid; gap: 24px; }
         .grid--games { grid-template-columns: repeat(4, 1fr); }
-
-        @media (max-width: 1024px) {
-            .grid--games { grid-template-columns: repeat(2, 1fr); }
-            .nav { gap: 18px; }
-        }
+        @media (max-width: 1024px) { .grid--games { grid-template-columns: repeat(2, 1fr); } .nav { gap: 18px; } }
         @media (max-width: 768px) {
             .grid--games { grid-template-columns: 1fr; }
             .nav { display: none; }
-            .nav.open {
-                display: flex; flex-direction: column; position: absolute;
-                top: 72px; left: 0; right: 0;
-                background: var(--surface);
-                padding: 24px;
-                border-bottom: 1px solid var(--border);
-                z-index: 99;
-            }
+            .nav.open { display: flex; flex-direction: column; position: absolute; top: 72px; left: 0; right: 0; background: var(--surface); padding: 24px; border-bottom: 1px solid var(--border); z-index: 99; }
             .nav.open a::after { display: none; }
             .burger { display: block; }
             .slide { padding: 48px 32px; min-height: 260px; }
@@ -235,448 +143,125 @@
         }
 
         /* ============ КАРТОЧКИ ============ */
-        .card {
-            position: relative;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            overflow: hidden;
-            transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, border-color .35s;
-        }
-        .card::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: inherit;
-            padding: 1px;
-            background: var(--gradient-3);
-            -webkit-mask:
-                linear-gradient(#000 0 0) content-box,
-                linear-gradient(#000 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity .35s;
-            pointer-events: none;
-            z-index: 2;
-        }
-        .card:hover {
-            transform: translateY(-6px);
-            border-color: transparent;
-            box-shadow:
-                0 24px 48px -16px rgba(124,92,255,0.4),
-                0 0 32px -8px rgba(255,92,212,0.25);
-        }
+        .card { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, border-color .35s; }
+        .card::before { content: ''; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; background: var(--gradient-3); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: opacity .35s; pointer-events: none; z-index: 2; }
+        .card:hover { transform: translateY(-6px); border-color: transparent; box-shadow: 0 24px 48px -16px rgba(124,92,255,0.4), 0 0 32px -8px rgba(255,92,212,0.25); }
         .card:hover::before { opacity: 1; }
 
-        .card__img {
-            position: relative;
-            height: 170px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 3.5rem;
-            background: linear-gradient(135deg, #2a1a4a 0%, #1a1a2e 100%);
-            overflow: hidden;
-            transition: filter .35s;
-        }
+        .card__img { position: relative; height: 170px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; background: linear-gradient(135deg, #2a1a4a 0%, #1a1a2e 100%); overflow: hidden; transition: filter .35s; }
         .light .card__img { background: linear-gradient(135deg, #e8e0ff 0%, #f0f0ff 100%); }
-        .card__img::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.12) 50%, transparent 70%);
-            transform: translateX(-100%);
-            transition: transform .7s ease;
-            pointer-events: none;
-        }
+        .card__img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.12) 50%, transparent 70%); transform: translateX(-100%); transition: transform .7s ease; pointer-events: none; }
         .card:hover .card__img::after { transform: translateX(100%); }
         .card:hover .card__img { filter: brightness(1.15); }
 
         .card__body { padding: 18px 20px 20px; }
-        .card__tags {
-            display: flex; gap: 6px; flex-wrap: wrap;
-            margin-bottom: 10px;
-        }
-        .tag {
-            display: inline-block;
-            padding: 3px 10px;
-            background: rgba(124,92,255,0.12);
-            border: 1px solid rgba(124,92,255,0.25);
-            color: var(--accent);
-            border-radius: 999px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
-        body.light .tag {
-            background: rgba(90,63,212,0.1);
-            border-color: rgba(90,63,212,0.22);
-        }
-        .card__title {
-            font-family: var(--font-heading);
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            line-height: 1.3;
-        }
-        .card__price {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-            font-weight: 800;
-            font-size: 1.35rem;
-            font-family: var(--font-heading);
+        .card__tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+        .tag { display: inline-block; padding: 3px 10px; background: rgba(124,92,255,0.12); border: 1px solid rgba(124,92,255,0.25); color: var(--accent); border-radius: 999px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+        body.light .tag { background: rgba(90,63,212,0.1); border-color: rgba(90,63,212,0.22); }
+        
+        .card__title { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; line-height: 1.3; }
+        .card__price { background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; font-weight: 800; font-size: 1.35rem; font-family: var(--font-heading); }
+
+        /* ============ СТРАНИЦА ИГРЫ ============ */
+        .game-detail { max-width: 900px; margin: 40px auto; background: var(--surface); padding: 48px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: 0 24px 60px -24px rgba(0,0,0,0.5); position: relative; overflow: hidden; }
+        .game-detail::before { content: ''; position: absolute; top: -20%; right: -10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(124,92,255,0.15), transparent 60%); pointer-events: none; }
+        .game-detail__header { display: flex; gap: 40px; align-items: center; margin-bottom: 40px; position: relative; z-index: 1; }
+        .game-detail__icon { font-size: 5rem; background: var(--surface-2); padding: 30px 40px; border-radius: 24px; border: 1px solid var(--border); box-shadow: inset 0 2px 10px rgba(0,0,0,0.2); }
+        .game-detail__info h1 { font-size: 2.8rem; margin-bottom: 12px; background: var(--gradient-3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .game-detail__price { font-size: 2rem; color: var(--accent); font-weight: 800; margin-top: 10px; font-family: var(--font-heading); }
+        .game-detail__content { position: relative; z-index: 1; }
+        .game-detail__content h3 { font-size: 1.4rem; margin: 28px 0 12px; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+        .game-detail__content p { font-size: 1.05rem; line-height: 1.8; color: var(--text-muted); }
+        
+        @media (max-width: 768px) {
+            .game-detail { padding: 24px; margin: 20px auto; }
+            .game-detail__header { flex-direction: column; text-align: center; gap: 20px; }
+            .game-detail__icon { font-size: 4rem; padding: 20px 30px; }
+            .game-detail__info h1 { font-size: 2rem; }
+            .game-detail__info .card__tags { justify-content: center; }
         }
 
         /* ============ ФОРМЫ ============ */
-        .form {
-            max-width: 440px;
-            margin: 48px auto;
-            background: var(--surface);
-            padding: 36px 32px;
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-            box-shadow: 0 24px 60px -24px rgba(0,0,0,0.5);
-            position: relative;
-            overflow: hidden;
-        }
-        .form::before {
-            content: '';
-            position: absolute;
-            top: -50%; right: -30%;
-            width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(124,92,255,0.18), transparent 60%);
-            pointer-events: none;
-        }
-        .form h2 {
-            position: relative;
-            margin-bottom: 28px;
-            text-align: center;
-            font-size: 1.6rem;
-        }
+        .form { max-width: 440px; margin: 48px auto; background: var(--surface); padding: 36px 32px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: 0 24px 60px -24px rgba(0,0,0,0.5); position: relative; overflow: hidden; }
+        .form::before { content: ''; position: absolute; top: -50%; right: -30%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(124,92,255,0.18), transparent 60%); pointer-events: none; }
+        .form h2 { position: relative; margin-bottom: 28px; text-align: center; font-size: 1.6rem; }
         .form-group { position: relative; margin-bottom: 18px; }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 14px 16px;
-            background: var(--surface-2);
-            border: 1.5px solid var(--border);
-            border-radius: var(--radius-sm);
-            color: var(--text);
-            font-size: 1rem;
-            font-family: inherit;
-            outline: none;
-            transition: border-color .2s, box-shadow .2s, background .2s;
-        }
-        .form-group input::placeholder { color: var(--text-muted); opacity: 0.6; }
-        .form-group input:focus, .form-group select:focus {
-            border-color: var(--accent);
-            background: var(--surface);
-            box-shadow: 0 0 0 4px rgba(124,92,255,0.15);
-        }
-        .form-group input.error {
-            border-color: var(--danger);
-            box-shadow: 0 0 0 4px rgba(255,77,109,0.12);
-        }
+        .form-group label { display: block; margin-bottom: 8px; color: var(--text-muted); font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 14px 16px; background: var(--surface-2); border: 1.5px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-size: 1rem; font-family: inherit; outline: none; transition: border-color .2s, box-shadow .2s, background .2s; }
+        .form-group textarea { resize: vertical; min-height: 80px; }
+        .form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-muted); opacity: 0.6; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--accent); background: var(--surface); box-shadow: 0 0 0 4px rgba(124,92,255,0.15); }
+        .form-group input.error, .form-group textarea.error { border-color: var(--danger); box-shadow: 0 0 0 4px rgba(255,77,109,0.12); }
 
         /* ============ КНОПКИ ============ */
-        .btn {
-            position: relative;
-            display: inline-block;
-            padding: 14px 26px;
-            background: var(--gradient);
-            color: #fff;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-weight: 700;
-            font-size: 0.95rem;
-            font-family: inherit;
-            letter-spacing: 0.02em;
-            cursor: pointer;
-            overflow: hidden;
-            transition: transform .2s, box-shadow .2s, opacity .2s;
-            box-shadow: 0 8px 24px -8px rgba(124,92,255,0.5);
-        }
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-            transition: left .5s ease;
-        }
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 32px -8px rgba(124,92,255,0.7), 0 0 24px -4px rgba(255,92,212,0.4);
-        }
+        .btn { position: relative; display: inline-block; padding: 14px 26px; background: var(--gradient); color: #fff; border: none; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.95rem; font-family: inherit; letter-spacing: 0.02em; overflow: hidden; transition: transform .2s, box-shadow .2s, opacity .2s; box-shadow: 0 8px 24px -8px rgba(124,92,255,0.5); }
+        .btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); transition: left .5s ease; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px -8px rgba(124,92,255,0.7), 0 0 24px -4px rgba(255,92,212,0.4); }
         .btn:hover::before { left: 100%; }
         .btn:active { transform: translateY(0); }
         .btn--block { width: 100%; }
-        .btn--danger {
-            background: linear-gradient(135deg, #ff4d6d, #d63455);
-            box-shadow: 0 8px 24px -8px rgba(255,77,109,0.5);
-        }
-        .btn--danger:hover {
-            box-shadow: 0 12px 32px -8px rgba(255,77,109,0.7);
-        }
-        .btn--ghost {
-            background: transparent;
-            border: 1.5px solid var(--border-strong);
-            color: var(--text);
-            box-shadow: none;
-        }
-        .btn--ghost:hover {
-            background: rgba(124,92,255,0.08);
-            border-color: var(--accent);
-            box-shadow: 0 0 20px -4px rgba(124,92,255,0.3);
-        }
+        .btn--danger { background: linear-gradient(135deg, #ff4d6d, #d63455); box-shadow: 0 8px 24px -8px rgba(255,77,109,0.5); }
+        .btn--danger:hover { box-shadow: 0 12px 32px -8px rgba(255,77,109,0.7); }
+        .btn--ghost { background: transparent; border: 1.5px solid var(--border-strong); color: var(--text); box-shadow: none; }
+        .btn--ghost:hover { background: rgba(124,92,255,0.08); border-color: var(--accent); box-shadow: 0 0 20px -4px rgba(124,92,255,0.3); }
         .btn--sm { padding: 8px 14px; font-size: 0.8rem; }
+        .btn:disabled { opacity: 0.5; transform: none; box-shadow: none; }
 
         /* ============ ТАБЛИЦЫ ============ */
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: var(--surface);
-            border-radius: var(--radius);
-            overflow: hidden;
-            border: 1px solid var(--border);
-        }
-        .admin-table th, .admin-table td {
-            padding: 14px 18px;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.92rem;
-        }
-        .admin-table th {
-            background: rgba(124,92,255,0.06);
-            font-weight: 600;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: var(--surface); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+        .admin-table th, .admin-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.92rem; }
+        .admin-table th { background: rgba(124,92,255,0.06); font-weight: 600; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
         .admin-table tbody tr { transition: background .2s; }
         .admin-table tbody tr:hover { background: rgba(124,92,255,0.05); }
         .admin-table tr:last-child td { border-bottom: none; }
 
-        /* ============ THEME TOGGLE ============ */
-        .theme-toggle {
-            position: fixed;
-            bottom: 24px; right: 24px;
-            width: 56px; height: 56px;
-            border-radius: 50%;
-            background: var(--gradient);
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-            display: flex; align-items: center; justify-content: center;
-            z-index: 90;
-            animation: pulseGlow 3s ease-in-out infinite;
-            transition: transform .3s;
-        }
+        /* ============ ПРОЧЕЕ ============ */
+        .theme-toggle { position: fixed; bottom: 24px; right: 24px; width: 56px; height: 56px; border-radius: 50%; background: var(--gradient); color: #fff; border: none; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; z-index: 90; animation: pulseGlow 3s ease-in-out infinite; transition: transform .3s; }
         .theme-toggle:hover { transform: scale(1.1) rotate(15deg); }
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 8px 24px rgba(124,92,255,0.4); }
-            50% { box-shadow: 0 8px 32px rgba(124,92,255,0.8), 0 0 48px rgba(255,92,212,0.4); }
-        }
+        @keyframes pulseGlow { 0%, 100% { box-shadow: 0 8px 24px rgba(124,92,255,0.4); } 50% { box-shadow: 0 8px 32px rgba(124,92,255,0.8), 0 0 48px rgba(255,92,212,0.4); } }
 
-        /* ============ СТРАНИЦЫ ============ */
         .page { display: none; }
-        .page.active {
-            display: block;
-            animation: pageIn .4s ease both;
-        }
-        @keyframes pageIn {
-            from { opacity: 0; transform: translateY(12px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        .section-title {
-            font-size: 1.8rem;
-            margin: 40px 0 24px;
-            display: inline-block;
-            position: relative;
-        }
-        .section-title::after {
-            content: '';
-            position: absolute;
-            left: 0; bottom: -8px;
-            width: 60px; height: 3px;
-            background: var(--gradient);
-            border-radius: 3px;
-        }
+        .page.active { display: block; animation: pageIn .4s ease both; }
+        @keyframes pageIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        .section-title { font-size: 1.8rem; margin: 40px 0 24px; display: inline-block; position: relative; }
+        .section-title::after { content: ''; position: absolute; left: 0; bottom: -8px; width: 60px; height: 3px; background: var(--gradient); border-radius: 3px; }
 
-        /* ============ ОШИБКИ ============ */
-        .form-error {
-            color: var(--danger);
-            font-size: 0.82rem;
-            margin-top: 6px;
-            display: none;
-        }
+        .form-error { color: var(--danger); font-size: 0.82rem; margin-top: 6px; display: none; }
         .form-error.show { display: block; animation: slideIn .25s ease; }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-4px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* ============ АДМИН-СТАТИСТИКА ============ */
-        .admin-stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 28px;
-            margin-top: 12px;
-        }
+        .admin-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 28px; margin-top: 12px; }
         @media (max-width: 1024px) { .admin-stats { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 480px) { .admin-stats { grid-template-columns: 1fr; } }
 
-        .stat-card {
-            position: relative;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 24px;
-            display: flex; flex-direction: column; gap: 10px;
-            overflow: hidden;
-            transition: transform .3s, border-color .3s;
-        }
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: -40px; right: -40px;
-            width: 140px; height: 140px;
-            border-radius: 50%;
-            background: var(--stat-glow, rgba(124,92,255,0.2));
-            filter: blur(40px);
-            pointer-events: none;
-        }
+        .stat-card { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; transition: transform .3s, border-color .3s; }
+        .stat-card::before { content: ''; position: absolute; top: -40px; right: -40px; width: 140px; height: 140px; border-radius: 50%; background: var(--stat-glow, rgba(124,92,255,0.2)); filter: blur(40px); pointer-events: none; }
         .stat-card:hover { transform: translateY(-4px); border-color: var(--border-strong); }
         .stat-card:nth-child(1) { --stat-glow: rgba(124,92,255,0.35); --stat-color: #7c5cff; }
         .stat-card:nth-child(2) { --stat-glow: rgba(34,229,138,0.3); --stat-color: #22e58a; }
         .stat-card:nth-child(3) { --stat-glow: rgba(0,229,255,0.3); --stat-color: #00e5ff; }
         .stat-card:nth-child(4) { --stat-glow: rgba(255,92,212,0.3); --stat-color: #ff5cd4; }
+        .stat-card__icon { width: 48px; height: 48px; border-radius: 12px; background: var(--stat-glow); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; position: relative; z-index: 1; }
+        .stat-card__label { color: var(--text-muted); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        .stat-card__value { font-family: var(--font-heading); font-size: 2rem; font-weight: 800; color: var(--stat-color, var(--accent)); position: relative; z-index: 1; }
 
-        .stat-card__icon {
-            width: 48px; height: 48px;
-            border-radius: 12px;
-            background: var(--stat-glow);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem;
-            position: relative;
-            z-index: 1;
-        }
-        .stat-card__label {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        .stat-card__value {
-            font-family: var(--font-heading);
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--stat-color, var(--accent));
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ============ АДМИН-БЛОКИ ============ */
-        .admin-block {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 28px;
-            margin-bottom: 28px;
-        }
-        .admin-block h3 {
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-            display: flex; align-items: center; gap: 10px;
-        }
+        .admin-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin-bottom: 28px; }
+        .admin-block h3 { margin-bottom: 20px; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
         .admin-form__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
         @media (max-width: 768px) { .admin-form__grid { grid-template-columns: 1fr; } }
         .admin-form__actions { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
 
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 999px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-        }
-        .badge--active {
-            background: rgba(34,229,138,0.12);
-            color: #22e58a;
-            border: 1px solid rgba(34,229,138,0.35);
-        }
-        .badge--hidden {
-            background: rgba(255,77,109,0.12);
-            color: #ff4d6d;
-            border: 1px solid rgba(255,77,109,0.35);
-        }
-        .badge--admin {
-            background: rgba(124,92,255,0.15);
-            color: var(--accent);
-            border: 1px solid rgba(124,92,255,0.4);
-        }
-        .badge--user {
-            background: rgba(139,139,167,0.12);
-            color: var(--text-muted);
-            border: 1px solid var(--border);
-        }
-
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+        .badge--active { background: rgba(34,229,138,0.12); color: #22e58a; border: 1px solid rgba(34,229,138,0.35); }
+        .badge--hidden { background: rgba(255,77,109,0.12); color: #ff4d6d; border: 1px solid rgba(255,77,109,0.35); }
+        .badge--admin { background: rgba(124,92,255,0.15); color: var(--accent); border: 1px solid rgba(124,92,255,0.4); }
+        .badge--user { background: rgba(139,139,167,0.12); color: var(--text-muted); border: 1px solid var(--border); }
         .table-actions { display: flex; gap: 6px; flex-wrap: wrap; }
 
-        /* ============ TOAST ============ */
-        .toast {
-            position: fixed; bottom: 96px; left: 50%;
-            transform: translateX(-50%) translateY(24px);
-            background: var(--surface);
-            color: var(--text);
-            border: 1px solid var(--border-strong);
-            padding: 16px 28px;
-            border-radius: 14px;
-            box-shadow: 0 20px 48px -8px rgba(0,0,0,0.5);
-            z-index: 9999;
-            opacity: 0;
-            pointer-events: none;
-            max-width: 90vw;
-            text-align: center;
-            font-weight: 500;
-            backdrop-filter: blur(20px);
-            transition: opacity .3s, transform .3s;
-        }
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-        .toast.success {
-            border-color: rgba(34,229,138,0.5);
-            color: #22e58a;
-            box-shadow: 0 20px 48px -8px rgba(34,229,138,0.25), 0 0 32px -8px rgba(34,229,138,0.4);
-        }
-        .toast.error {
-            border-color: rgba(255,77,109,0.5);
-            color: #ff4d6d;
-            box-shadow: 0 20px 48px -8px rgba(255,77,109,0.25), 0 0 32px -8px rgba(255,77,109,0.4);
-        }
-
-        /* ============ УТИЛИТЫ ============ */
-        .mt-2 { margin-top: 16px; }
+        .toast { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%) translateY(24px); background: var(--surface); color: var(--text); border: 1px solid var(--border-strong); padding: 16px 28px; border-radius: 14px; box-shadow: 0 20px 48px -8px rgba(0,0,0,0.5); z-index: 9999; opacity: 0; pointer-events: none; max-width: 90vw; text-align: center; font-weight: 500; backdrop-filter: blur(20px); transition: opacity .3s, transform .3s; }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast.success { border-color: rgba(34,229,138,0.5); color: #22e58a; box-shadow: 0 20px 48px -8px rgba(34,229,138,0.25), 0 0 32px -8px rgba(34,229,138,0.4); }
+        .toast.error { border-color: rgba(255,77,109,0.5); color: #ff4d6d; box-shadow: 0 20px 48px -8px rgba(255,77,109,0.25), 0 0 32px -8px rgba(255,77,109,0.4); }
     </style>
 </head>
 <body>
@@ -704,6 +289,7 @@
 
 <main class="container">
 
+    <!-- ГЛАВНАЯ -->
     <div id="home" class="page active">
         <div class="slider">
             <div class="slide">
@@ -716,104 +302,48 @@
                 <h2>Еженедельные распродажи хитов</h2>
                 <p>Успей купить игры мечты по выгодной цене. Новые акции каждую пятницу.</p>
             </div>
-            <div class="slide">
-                <span class="slide__badge">✨ Новинки</span>
-                <h2>Следи за релизами</h2>
-                <p>Получай уведомления о поступлениях и первым узнавай о новинках.</p>
-            </div>
         </div>
 
         <h2 class="section-title">Популярные игры</h2>
-        <div class="grid grid--games">
-            <div class="card">
-                <div class="card__img">🎮</div>
-                <div class="card__body">
-                    <div class="card__tags"><span class="tag">RPG</span><span class="tag">Экшен</span></div>
-                    <div class="card__title">Cyber Odyssey</div>
-                    <div class="card__price">1 999 ₽</div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card__img">🚀</div>
-                <div class="card__body">
-                    <div class="card__tags"><span class="tag">Sci-Fi</span><span class="tag">Приключение</span></div>
-                    <div class="card__title">Star Frontier</div>
-                    <div class="card__price">1 499 ₽</div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card__img">🗡️</div>
-                <div class="card__body">
-                    <div class="card__tags"><span class="tag">Экшен</span><span class="tag">Souls-like</span></div>
-                    <div class="card__title">Dark Souls Remake</div>
-                    <div class="card__price">2 499 ₽</div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card__img">🏎️</div>
-                <div class="card__body">
-                    <div class="card__tags"><span class="tag">Гонки</span><span class="tag">Спорт</span></div>
-                    <div class="card__title">Speed Legends</div>
-                    <div class="card__price">999 ₽</div>
-                </div>
-            </div>
-        </div>
+        <div class="grid grid--games" id="homeGamesGrid"></div>
     </div>
 
+    <!-- КАТАЛОГ -->
     <div id="catalog" class="page">
         <h2 class="section-title">Каталог игр</h2>
-        <div class="grid grid--games">
-            <div class="card">
-                <div class="card__img">🎮</div>
-                <div class="card__body">
-                    <div class="card__tags"><span class="tag">RPG</span></div>
-                    <div class="card__title">Cyber Odyssey</div>
-                    <div class="card__price">1 999 ₽</div>
+        <div class="grid grid--games" id="catalogGamesGrid"></div>
+    </div>
+
+    <!-- СТРАНИЦА ИГРЫ -->
+    <div id="game-detail-page" class="page">
+        <div class="game-detail">
+            <button class="btn btn--ghost" onclick="goBackFromDetail()" style="margin-bottom: 24px; padding: 10px 20px;">← Назад</button>
+            
+            <div class="game-detail__header">
+                <div class="game-detail__icon" id="gd-icon">🎮</div>
+                <div class="game-detail__info">
+                    <h1 id="gd-title">Название игры</h1>
+                    <div class="card__tags" id="gd-tags"></div>
+                    <div class="game-detail__price" id="gd-price">0 ₽</div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card__img">🚀</div>
-                <div class="card__body">
-                    <div class="card__tags"><span class="tag">Sci-Fi</span></div>
-                    <div class="card__title">Star Frontier</div>
-                    <div class="card__price">1 499 ₽</div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card__img">🗡️</div>
-                <div class="card__body">
-                    <div class="card__tags"><span class="tag">Экшен</span></div>
-                    <div class="card__title">Dark Souls Remake</div>
-                    <div class="card__price">2 499 ₽</div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card__img">🏎️</div>
-                <div class="card__body">
-                    <div class="card__tags"><span class="tag">Гонки</span></div>
-                    <div class="card__title">Speed Legends</div>
-                    <div class="card__price">999 ₽</div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card__img">🧙</div>
-                <div class="card__body">
-                    <div class="card__tags"><span class="tag">RPG</span><span class="tag">Фэнтези</span></div>
-                    <div class="card__title">Magic Realm</div>
-                    <div class="card__price">1 299 ₽</div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card__img">⚔️</div>
-                <div class="card__body">
-                    <div class="card__tags"><span class="tag">FPS</span><span class="tag">Шутер</span></div>
-                    <div class="card__title">Warfront</div>
-                    <div class="card__price">1 799 ₽</div>
+
+            <div class="game-detail__content">
+                <h3>Об игре</h3>
+                <p id="gd-desc">Описание загружается...</p>
+                
+                <h3>Что можно делать в игре?</h3>
+                <p id="gd-features">Информация загружается...</p>
+
+                <div style="margin-top: 40px; display: flex; gap: 16px; flex-wrap: wrap;">
+                    <button class="btn" id="gd-buy-btn">Купить сейчас</button>
+                    <button class="btn btn--ghost" id="gd-fav-btn">🤍 В избранное</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- ВХОД -->
     <div id="login" class="page">
         <div class="form">
             <h2>Вход</h2>
@@ -834,6 +364,7 @@
         </div>
     </div>
 
+    <!-- РЕГИСТРАЦИЯ -->
     <div id="register" class="page">
         <div class="form">
             <h2>Регистрация</h2>
@@ -861,6 +392,7 @@
         </div>
     </div>
 
+    <!-- КАБИНЕТ -->
     <div id="profile" class="page">
         <div class="form" style="max-width:520px;">
             <h2>Личный кабинет</h2>
@@ -884,6 +416,7 @@
         </div>
     </div>
 
+    <!-- АДМИНКА -->
     <div id="admin" class="page">
         <h2 class="section-title">Админ-панель</h2>
 
@@ -919,6 +452,14 @@
                     <div class="form-error" id="admTitleErr"></div>
                 </div>
                 <div class="form-group">
+                    <label>Жанр (через запятую)</label>
+                    <input type="text" id="admGenre" placeholder="RPG, Экшен">
+                </div>
+                <div class="form-group">
+                    <label>Иконка (эмодзи)</label>
+                    <input type="text" id="admEmoji" placeholder="🎮" maxlength="5">
+                </div>
+                <div class="form-group">
                     <label>Цена, ₽</label>
                     <input type="number" id="admPrice" placeholder="1999" min="1">
                     <div class="form-error" id="admPriceErr"></div>
@@ -931,6 +472,14 @@
                     </select>
                 </div>
             </div>
+            <div class="form-group" style="margin-top: 16px;">
+                <label>Краткое описание</label>
+                <textarea id="admDesc" placeholder="О чём эта игра..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Что можно делать в игре?</label>
+                <textarea id="admFeatures" placeholder="Исследовать мир, сражаться с боссами..."></textarea>
+            </div>
             <div class="admin-form__actions">
                 <button type="button" class="btn" id="admSubmitBtn" onclick="handleSaveGame()">Добавить игру</button>
                 <button type="button" class="btn btn--ghost" id="admCancelBtn" style="display:none;" onclick="resetAdminForm()">Отмена</button>
@@ -941,7 +490,7 @@
             <h3>🎮 Список игр</h3>
             <table class="admin-table">
                 <thead>
-                    <tr><th>ID</th><th>Название</th><th>Цена</th><th>Статус</th><th>Действия</th></tr>
+                    <tr><th>ID</th><th>Игра</th><th>Цена</th><th>Статус</th><th>Действия</th></tr>
                 </thead>
                 <tbody id="adminTableBody"></tbody>
             </table>
@@ -958,6 +507,7 @@
         </div>
     </div>
 
+    <!-- СВЕТЛАЯ ТЕМА -->
     <div id="home-light" class="page">
         <div class="slider">
             <div class="slide">
@@ -965,31 +515,9 @@
                 <h2>Добро пожаловать в BestGames</h2>
                 <p>Тысячи игр по лучшим ценам. Открой для себя новый мир развлечений.</p>
             </div>
-            <div class="slide">
-                <span class="slide__badge">⚡ Скидки до 70%</span>
-                <h2>Еженедельные распродажи хитов</h2>
-                <p>Успей купить по выгодной цене.</p>
-            </div>
         </div>
         <h2 class="section-title">Популярные игры</h2>
-        <div class="grid grid--games">
-            <div class="card">
-                <div class="card__img">🎮</div>
-                <div class="card__body">
-                    <div class="card__tags"><span class="tag">RPG</span></div>
-                    <div class="card__title">Cyber Odyssey</div>
-                    <div class="card__price">1 999 ₽</div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card__img">🚀</div>
-                <div class="card__body">
-                    <div class="card__tags"><span class="tag">Sci-Fi</span></div>
-                    <div class="card__title">Star Frontier</div>
-                    <div class="card__price">1 499 ₽</div>
-                </div>
-            </div>
-        </div>
+        <div class="grid grid--games" id="homeLightGamesGrid"></div>
     </div>
 
 </main>
@@ -999,10 +527,23 @@
 
 <script>
 /* ============================================================
-   JS — идентичен предыдущей рабочей версии, ничего не изменено
+   БАЗА ДАННЫХ ИГР
+   ============================================================ */
+const DEFAULT_GAMES = [
+    { id: 1, title: 'Cyber Odyssey', price: 1999, status: 'Активна', genre: 'RPG, Экшен', emoji: '🎮', desc: 'Погрузитесь в мрачный неоновый мегаполис будущего, где технологии заменили магию, а корпорации правят миром.', features: 'Исследуйте открытый мир, взламывайте системы безопасности, сражайтесь с кибер-мутантами и улучшайте свои импланты.' },
+    { id: 2, title: 'Star Frontier', price: 1499, status: 'Активна', genre: 'Sci-Fi, Приключение', emoji: '🚀', desc: 'Космическая одиссея в неизведанных глубинах галактики. Ваш корабль — ваш дом, а судьба — в ваших руках.', features: 'Стройте и модернизируйте звездолеты, исследуйте новые планеты, торгуйте ресурсами и вступайте в бои с пиратами.' },
+    { id: 3, title: 'Dark Souls Remake', price: 2499, status: 'Скрыта', genre: 'Экшен, Souls-like', emoji: '🗡️', desc: 'Легендарный хардкор возвращается. Погрузитесь во тьму древнего королевства, полного опасностей и сокровищ.', features: 'Сражайтесь с боссами, прокачивайте характеристики, изучайте лор и ищите секретные проходы в огромном взаимосвязанном мире.' },
+    { id: 4, title: 'Speed Legends', price: 999, status: 'Активна', genre: 'Гонки, Спорт', emoji: '🏎️', desc: 'Почувствуйте адреналин на пределе возможностей. Уличные гонки, роскошные тачки и ночной город.', features: 'Тюнингуйте автомобили, участвуйте в нелегальных заездах, уходите от полиции и завоевывайте титул лучшего гонщика.' },
+    { id: 5, title: 'Magic Realm', price: 1299, status: 'Активна', genre: 'RPG, Фэнтези', emoji: '🧙', desc: 'Мир, где магия течет в каждом камне. Станьте величайшим архимагом и восстановите равновесие стихий.', features: 'Изучайте десятки заклинаний, сражайтесь с драконами, собирайте редкие ингредиенты и стройте собственную башню мага.' },
+    { id: 6, title: 'Warfront', price: 1799, status: 'Активна', genre: 'FPS, Шутер', emoji: '⚔️', desc: 'Масштабные сражения Второй мировой войны. Только вы и ваша винтовка на поле боя.', features: 'Участвуйте в 64-игровых битвах, управляйте танками, используйте тактику и разрушайте укрытия противника.' },
+    { id: 7, title: "Five Nights at Freddy's", price: 399, status: 'Активна', genre: 'Хоррор, Выживание', emoji: '🐻', desc: 'Добро пожаловать в пиццерию Фредди Фазбера! Вы — ночной охранник, которому нужно выжить 5 ночей, следя за камерами и экономя электроэнергию.', features: 'Следите за аниматрониками через камеры, закрывайте двери, экономьте электроэнергию до 6 утра и не дайте Фредди, Бонни, Чике и Фокси добраться до вас.' },
+    { id: 8, title: "Five Nights at Freddy's 2", price: 399, status: 'Активна', genre: 'Хоррор, Выживание', emoji: '🐰', desc: 'Новая пиццерия, новые аниматроники и еще больше ужаса. У вас нет дверей, но есть маска и фонарик. Продержитесь до утра!', features: 'Используйте маску Фредди для маскировки, светите фонариком на темные углы, заводите музыкальную шкатулку и отбивайтесь от Той Бонни.' }
+];
+
+/* ============================================================
+   БАЗОВЫЕ УТИЛИТЫ
    ============================================================ */
 function showToast(msg, type) {
-    console.log('[Toast]', type || 'info', ':', msg);
     const t = document.getElementById('toast');
     if (!t) return;
     t.textContent = msg;
@@ -1013,25 +554,28 @@ function showToast(msg, type) {
 
 const memStore = {};
 const safeStore = {
-    get(key) {
-        try { return localStorage.getItem(key); }
-        catch (e) { return memStore[key] ?? null; }
-    },
-    set(key, val) {
-        try { localStorage.setItem(key, val); }
-        catch (e) { memStore[key] = val; }
-    },
-    remove(key) {
-        try { localStorage.removeItem(key); }
-        catch (e) { memStore[key] = null; }
-    }
+    get(key) { try { return localStorage.getItem(key); } catch (e) { return memStore[key] ?? null; } },
+    set(key, val) { try { localStorage.setItem(key, val); } catch (e) { memStore[key] = val; } },
+    remove(key) { try { localStorage.removeItem(key); } catch (e) { memStore[key] = null; } }
 };
 
+function escapeHtml(s) {
+    return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ============================================================
+   НАВИГАЦИЯ
+   ============================================================ */
+let previousPage = 'catalog';
+
 function showPage(id) {
-    console.log('[showPage]', id);
     if ((id === 'profile' || id === 'admin') && !getSession()) {
         id = 'login';
     }
+    if (id !== 'game-detail-page') {
+        previousPage = id;
+    }
+
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     const target = document.getElementById(id);
     if (target) target.classList.add('active');
@@ -1042,17 +586,23 @@ function showPage(id) {
         a.classList.toggle('active', a.getAttribute('data-nav') === id);
     });
 
-    if (id === 'home-light' && !isLightTheme) {
-        isLightTheme = true;
-        applyTheme();
-    }
-
+    if (id === 'home-light' && !isLightTheme) { isLightTheme = true; applyTheme(); }
     document.querySelector('.nav').classList.remove('open');
 
     if (id === 'profile') renderProfile();
     if (id === 'admin')   renderAdminAll();
+    if (id === 'home' || id === 'home-light' || id === 'catalog') renderGames();
 
     location.hash = id;
+    window.scrollTo(0, 0);
+}
+
+function goBackFromDetail() {
+    if (previousPage && previousPage !== 'game-detail-page') {
+        showPage(previousPage);
+    } else {
+        showPage('catalog');
+    }
 }
 
 function renderAuthNav() {
@@ -1072,6 +622,9 @@ function renderAuthNav() {
     }
 }
 
+/* ============================================================
+   ТЕМА
+   ============================================================ */
 let isLightTheme = false;
 function applyTheme() {
     document.body.classList.toggle('light', isLightTheme);
@@ -1081,25 +634,175 @@ function applyTheme() {
 function toggleTheme() { isLightTheme = !isLightTheme; applyTheme(); }
 function toggleThemeNav() { toggleTheme(); }
 
-function getSession() {
+/* ============================================================
+   ИГРЫ: ХРАНИЛИЩЕ, РЕНДЕР, ДЕТАЛИ, ПОКУПКА, ИЗБРАННОЕ
+   ============================================================ */
+function getGames() {
     try {
-        const raw = safeStore.get('bg_session');
-        return raw ? JSON.parse(raw) : null;
-    } catch (e) { return null; }
+        const raw = safeStore.get('bg_games_v3');
+        const parsed = raw ? JSON.parse(raw) : null;
+        if (Array.isArray(parsed) && parsed.length) return parsed;
+    } catch (e) {}
+    safeStore.set('bg_games_v3', JSON.stringify(DEFAULT_GAMES));
+    return DEFAULT_GAMES.slice();
+}
+function saveGames(arr) { safeStore.set('bg_games_v3', JSON.stringify(arr)); }
+
+let currentGameId = null;
+
+function createCardHTML(g) {
+    const tags = (g.genre || 'Игра').split(',').map(t => `<span class="tag">${t.trim()}</span>`).join('');
+    return `
+        <div class="card" onclick="openGameDetail(${g.id})">
+            <div class="card__img">${g.emoji || '🎮'}</div>
+            <div class="card__body">
+                <div class="card__tags">${tags}</div>
+                <div class="card__title">${escapeHtml(g.title)}</div>
+                <div class="card__price">${Number(g.price).toLocaleString('ru-RU')} ₽</div>
+            </div>
+        </div>`;
+}
+
+function renderGames() {
+    const games = getGames().filter(g => g.status === 'Активна');
+    const html = games.map(createCardHTML).join('');
+    
+    const homeGrid = document.getElementById('homeGamesGrid');
+    if (homeGrid) homeGrid.innerHTML = html || '<div style="color:var(--text-muted)">Нет игр</div>';
+    
+    const lightGrid = document.getElementById('homeLightGamesGrid');
+    if (lightGrid) lightGrid.innerHTML = html || '<div style="color:var(--text-muted)">Нет игр</div>';
+
+    const catalogGrid = document.getElementById('catalogGamesGrid');
+    if (catalogGrid) {
+        const allGames = getGames().map(createCardHTML).join('');
+        catalogGrid.innerHTML = allGames || '<div style="color:var(--text-muted)">Нет игр</div>';
+    }
+}
+
+function openGameDetail(id) {
+    currentGameId = id;
+    const g = getGames().find(x => x.id === id);
+    if (!g) return;
+
+    document.getElementById('gd-title').textContent = g.title;
+    document.getElementById('gd-price').textContent = Number(g.price).toLocaleString('ru-RU') + ' ₽';
+    document.getElementById('gd-icon').textContent = g.emoji || '🎮';
+    document.getElementById('gd-desc').textContent = g.desc || 'Описание для этой игры пока не добавлено.';
+    document.getElementById('gd-features').textContent = g.features || 'Информация о геймплее пока отсутствует.';
+    
+    const tags = (g.genre || 'Игра').split(',').map(t => `<span class="tag">${t.trim()}</span>`).join('');
+    document.getElementById('gd-tags').innerHTML = tags;
+
+    updateDetailButtons();
+    showPage('game-detail-page');
+}
+
+function updateDetailButtons() {
+    const user = getSession();
+    const buyBtn = document.getElementById('gd-buy-btn');
+    const favBtn = document.getElementById('gd-fav-btn');
+
+    if (!user) {
+        buyBtn.textContent = 'Войдите, чтобы купить';
+        buyBtn.disabled = false;
+        buyBtn.onclick = () => showPage('login');
+        
+        favBtn.textContent = '🤍 В избранное (Войдите)';
+        favBtn.className = 'btn btn--ghost';
+        favBtn.onclick = () => showPage('login');
+        return;
+    }
+
+    const hasBought = (user.purchases || []).includes(currentGameId);
+    if (hasBought) {
+        buyBtn.textContent = '✅ Уже куплено';
+        buyBtn.disabled = true;
+        buyBtn.onclick = null;
+    } else {
+        buyBtn.textContent = 'Купить сейчас';
+        buyBtn.disabled = false;
+        buyBtn.onclick = handleBuyGame;
+    }
+
+    const isFav = (user.favorites || []).includes(currentGameId);
+    if (isFav) {
+        favBtn.textContent = '❤️ В избранном';
+        favBtn.className = 'btn btn--danger';
+        favBtn.style.boxShadow = 'none';
+    } else {
+        favBtn.textContent = '🤍 В избранное';
+        favBtn.className = 'btn btn--ghost';
+        favBtn.style.boxShadow = 'none';
+    }
+    favBtn.onclick = handleToggleFavorite;
+}
+
+function handleBuyGame() {
+    const user = getSession();
+    if (!user) return showPage('login');
+
+    const game = getGames().find(g => g.id === currentGameId);
+    if (!game) return;
+
+    if (!user.purchases) user.purchases = [];
+    if (user.purchases.includes(currentGameId)) return;
+
+    if (user.balance < game.price) {
+        showToast('Недостаточно средств на балансе!', 'error');
+        return;
+    }
+
+    if (!confirm(`Купить "${game.title}" за ${game.price} ₽?`)) return;
+
+    user.balance -= game.price;
+    user.purchases.push(currentGameId);
+
+    const users = getUsers();
+    const idx = users.findIndex(u => u.email === user.email);
+    if (idx >= 0) { users[idx] = user; saveUsers(users); }
+    saveSession(user);
+
+    showToast(`Игра "${game.title}" успешно куплена!`, 'success');
+    updateDetailButtons();
+    renderProfile();
+}
+
+function handleToggleFavorite() {
+    const user = getSession();
+    if (!user) return showPage('login');
+
+    if (!user.favorites) user.favorites = [];
+    const index = user.favorites.indexOf(currentGameId);
+
+    if (index >= 0) {
+        user.favorites.splice(index, 1);
+        showToast('Удалено из избранного', 'success');
+    } else {
+        user.favorites.push(currentGameId);
+        showToast('Добавлено в избранное ❤️', 'success');
+    }
+
+    const users = getUsers();
+    const idx = users.findIndex(u => u.email === user.email);
+    if (idx >= 0) { users[idx] = user; saveUsers(users); }
+    saveSession(user);
+
+    updateDetailButtons();
+}
+
+/* ============================================================
+   ПОЛЬЗОВАТЕЛИ
+   ============================================================ */
+function getSession() {
+    try { const raw = safeStore.get('bg_session'); return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
 }
 function getUsers() {
-    try {
-        const raw = safeStore.get('bg_users');
-        const parsed = raw ? JSON.parse(raw) : [];
-        return Array.isArray(parsed) ? parsed : [];
-    } catch (e) { return []; }
+    try { const raw = safeStore.get('bg_users'); const p = raw ? JSON.parse(raw) : []; return Array.isArray(p) ? p : []; } catch (e) { return []; }
 }
 function saveUsers(arr) { safeStore.set('bg_users', JSON.stringify(arr)); }
 function saveSession(u)  { safeStore.set('bg_session', JSON.stringify(u)); }
 
-function escapeHtml(s) {
-    return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
 function setFieldError(inputId, errId, msg) {
     const input = document.getElementById(inputId);
     const err = document.getElementById(errId);
@@ -1110,88 +813,53 @@ function clearFieldErrors(pairs) { pairs.forEach(([i, e]) => setFieldError(i, e,
 
 function handleRegister() {
     try {
-        clearFieldErrors([
-            ['regName', 'regNameErr'],
-            ['regEmail', 'regEmailErr'],
-            ['regPassword', 'regPasswordErr'],
-            ['regPassword2', 'regPassword2Err']
-        ]);
-
-        const name  = (document.getElementById('regName')?.value || '').trim();
+        clearFieldErrors([['regName', 'regNameErr'], ['regEmail', 'regEmailErr'], ['regPassword', 'regPasswordErr'], ['regPassword2', 'regPassword2Err']]);
+        const name = (document.getElementById('regName')?.value || '').trim();
         const email = (document.getElementById('regEmail')?.value || '').trim();
-        const pass  = document.getElementById('regPassword')?.value || '';
+        const pass = document.getElementById('regPassword')?.value || '';
         const pass2 = document.getElementById('regPassword2')?.value || '';
-
         let ok = true;
+
         if (name.length < 2) { setFieldError('regName', 'regNameErr', 'Минимум 2 символа'); ok = false; }
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setFieldError('regEmail', 'regEmailErr', 'Некорректный email'); ok = false; }
-        else if (getUsers().some(u => u.email.toLowerCase() === email.toLowerCase())) {
-            setFieldError('regEmail', 'regEmailErr', 'Email уже занят'); ok = false;
-        }
+        else if (getUsers().some(u => u.email.toLowerCase() === email.toLowerCase())) { setFieldError('regEmail', 'regEmailErr', 'Email уже занят'); ok = false; }
         if (pass.length < 6) { setFieldError('regPassword', 'regPasswordErr', 'Минимум 6 символов'); ok = false; }
         if (pass !== pass2) { setFieldError('regPassword2', 'regPassword2Err', 'Пароли не совпадают'); ok = false; }
         if (!ok) return;
 
-        const user = { id: Date.now(), name, email, password: pass, balance: 0, role: 'user' };
-        const users = getUsers();
-        users.push(user);
-        saveUsers(users);
-        saveSession(user);
-
+        const user = { id: Date.now(), name, email, password: pass, balance: 5000, role: 'user', purchases: [], favorites: [] };
+        const users = getUsers(); users.push(user); saveUsers(users); saveSession(user);
         renderAuthNav();
-
-        ['regName','regEmail','regPassword','regPassword2'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.value = '';
-        });
-
-        showToast(`Добро пожаловать, ${name}!`, 'success');
+        ['regName','regEmail','regPassword','regPassword2'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+        showToast(`Добро пожаловать, ${name}! Вам начислено 5000 ₽`, 'success');
         showPage('profile');
-    } catch (err) {
-        showToast('Ошибка: ' + err.message, 'error');
-    }
+    } catch (err) { showToast('Ошибка: ' + err.message, 'error'); }
 }
 
 function handleLogin() {
     try {
-        clearFieldErrors([
-            ['loginEmail', 'loginEmailErr'],
-            ['loginPassword', 'loginPasswordErr']
-        ]);
-
+        clearFieldErrors([['loginEmail', 'loginEmailErr'], ['loginPassword', 'loginPasswordErr']]);
         const email = (document.getElementById('loginEmail')?.value || '').trim();
-        const pass  = document.getElementById('loginPassword')?.value || '';
-
+        const pass = document.getElementById('loginPassword')?.value || '';
         if (!email) { setFieldError('loginEmail', 'loginEmailErr', 'Введите email'); return; }
-        if (!pass)  { setFieldError('loginPassword', 'loginPasswordErr', 'Введите пароль'); return; }
+        if (!pass) { setFieldError('loginPassword', 'loginPasswordErr', 'Введите пароль'); return; }
 
-        const user = getUsers().find(u =>
-            u.email.toLowerCase() === email.toLowerCase() && u.password === pass
-        );
+        const user = getUsers().find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === pass);
+        if (!user) { setFieldError('loginPassword', 'loginPasswordErr', 'Неверный email или пароль'); return; }
 
-        if (!user) {
-            setFieldError('loginPassword', 'loginPasswordErr', 'Неверный email или пароль');
-            return;
-        }
+        if (!user.purchases) user.purchases = [];
+        if (!user.favorites) user.favorites = [];
 
-        saveSession(user);
-        renderAuthNav();
-
+        saveSession(user); renderAuthNav();
         document.getElementById('loginEmail').value = '';
         document.getElementById('loginPassword').value = '';
-
         showToast(`С возвращением, ${user.name}!`, 'success');
         showPage('profile');
-    } catch (err) {
-        showToast('Ошибка: ' + err.message, 'error');
-    }
+    } catch (err) { showToast('Ошибка: ' + err.message, 'error'); }
 }
 
 function handleLogout() {
-    safeStore.remove('bg_session');
-    renderAuthNav();
-    showToast('Вы вышли из аккаунта');
-    showPage('home');
+    safeStore.remove('bg_session'); renderAuthNav(); showToast('Вы вышли из аккаунта'); showPage('home');
 }
 
 function renderProfile() {
@@ -1207,44 +875,17 @@ function handleProfileSave() {
     const user = getSession();
     if (!user) return;
     const newName = document.getElementById('profileName').value.trim();
-    if (newName.length < 2) {
-        setFieldError('profileName', 'profileNameErr', 'Минимум 2 символа');
-        return;
-    }
+    if (newName.length < 2) { setFieldError('profileName', 'profileNameErr', 'Минимум 2 символа'); return; }
     setFieldError('profileName', 'profileNameErr', '');
-
     const users = getUsers();
     const idx = users.findIndex(u => u.email === user.email);
-    if (idx >= 0) {
-        users[idx].name = newName;
-        saveUsers(users);
-        saveSession(users[idx]);
-    }
-    renderAuthNav();
-    showToast('Данные сохранены', 'success');
-    renderProfile();
+    if (idx >= 0) { users[idx].name = newName; saveUsers(users); saveSession(users[idx]); }
+    renderAuthNav(); showToast('Данные сохранены', 'success'); renderProfile();
 }
 
-const DEFAULT_GAMES = [
-    { id: 1, title: 'Cyber Odyssey',     price: 1999, status: 'Активна' },
-    { id: 2, title: 'Star Frontier',     price: 1499, status: 'Активна' },
-    { id: 3, title: 'Dark Souls Remake', price: 2499, status: 'Скрыта'  },
-    { id: 4, title: 'Speed Legends',     price: 999,  status: 'Активна' },
-    { id: 5, title: 'Magic Realm',       price: 1299, status: 'Активна' },
-    { id: 6, title: 'Warfront',          price: 1799, status: 'Активна' }
-];
-
-function getGames() {
-    try {
-        const raw = safeStore.get('bg_games');
-        const parsed = raw ? JSON.parse(raw) : null;
-        if (Array.isArray(parsed) && parsed.length) return parsed;
-    } catch (e) {}
-    safeStore.set('bg_games', JSON.stringify(DEFAULT_GAMES));
-    return DEFAULT_GAMES.slice();
-}
-function saveGames(arr) { safeStore.set('bg_games', JSON.stringify(arr)); }
-
+/* ============================================================
+   АДМИНКА
+   ============================================================ */
 function renderAdminAll() { renderStats(); renderAdminTable(); renderAdminUsers(); }
 
 function renderStats() {
@@ -1261,19 +902,14 @@ function renderAdminTable() {
     const games = getGames();
     const tbody = document.getElementById('adminTableBody');
     if (!tbody) return;
-    if (!games.length) {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">Нет игр</td></tr>';
-        return;
-    }
+    if (!games.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">Нет игр</td></tr>'; return; }
     tbody.innerHTML = games.map(g => {
         const isActive = g.status === 'Активна';
-        const badge = isActive
-            ? '<span class="badge badge--active">Активна</span>'
-            : '<span class="badge badge--hidden">Скрыта</span>';
+        const badge = isActive ? '<span class="badge badge--active">Активна</span>' : '<span class="badge badge--hidden">Скрыта</span>';
         const toggleLabel = isActive ? 'Скрыть' : 'Показать';
         return `<tr>
             <td>${g.id}</td>
-            <td>${escapeHtml(g.title)}</td>
+            <td>${escapeHtml(g.emoji || '🎮')} ${escapeHtml(g.title)}</td>
             <td>${Number(g.price).toLocaleString('ru-RU')} ₽</td>
             <td>${badge}</td>
             <td><div class="table-actions">
@@ -1290,18 +926,11 @@ function renderAdminUsers() {
     const session = getSession();
     const tbody = document.getElementById('adminUsersBody');
     if (!tbody) return;
-    if (!users.length) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">Нет пользователей</td></tr>';
-        return;
-    }
+    if (!users.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">Нет пользователей</td></tr>'; return; }
     tbody.innerHTML = users.map((u, i) => {
-        const role = u.role === 'admin'
-            ? '<span class="badge badge--admin">Админ</span>'
-            : '<span class="badge badge--user">Пользователь</span>';
+        const role = u.role === 'admin' ? '<span class="badge badge--admin">Админ</span>' : '<span class="badge badge--user">Пользователь</span>';
         const isMe = session && session.email === u.email;
-        const delBtn = isMe
-            ? '<button type="button" class="btn btn--sm btn--ghost" disabled>—</button>'
-            : `<button type="button" class="btn btn--sm btn--danger" onclick="handleDeleteUser(${i})">🗑 Удалить</button>`;
+        const delBtn = isMe ? '<button type="button" class="btn btn--sm btn--ghost" disabled>—</button>' : `<button type="button" class="btn btn--sm btn--danger" onclick="handleDeleteUser(${i})">🗑 Удалить</button>`;
         return `<tr>
             <td>${u.id || i + 1}</td>
             <td>${escapeHtml(u.name)}</td>
@@ -1317,8 +946,7 @@ let editingGameId = null;
 
 function resetAdminForm() {
     editingGameId = null;
-    document.getElementById('admTitle').value = '';
-    document.getElementById('admPrice').value = '';
+    ['admTitle', 'admGenre', 'admEmoji', 'admPrice', 'admDesc', 'admFeatures'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
     document.getElementById('admStatus').value = 'Активна';
     document.getElementById('admFormTitle').textContent = '➕ Добавить игру';
     document.getElementById('admSubmitBtn').textContent = 'Добавить игру';
@@ -1331,8 +959,12 @@ function handleEditGame(id) {
     if (!g) return;
     editingGameId = id;
     document.getElementById('admTitle').value = g.title;
+    document.getElementById('admGenre').value = g.genre || '';
+    document.getElementById('admEmoji').value = g.emoji || '';
     document.getElementById('admPrice').value = g.price;
     document.getElementById('admStatus').value = g.status;
+    document.getElementById('admDesc').value = g.desc || '';
+    document.getElementById('admFeatures').value = g.features || '';
     document.getElementById('admFormTitle').textContent = '✏️ Редактировать игру #' + id;
     document.getElementById('admSubmitBtn').textContent = 'Сохранить изменения';
     document.getElementById('admCancelBtn').style.display = 'inline-block';
@@ -1342,8 +974,13 @@ function handleEditGame(id) {
 function handleSaveGame() {
     clearFieldErrors([['admTitle', 'admTitleErr'], ['admPrice', 'admPriceErr']]);
     const title = document.getElementById('admTitle').value.trim();
+    const genre = document.getElementById('admGenre').value.trim();
+    const emoji = document.getElementById('admEmoji').value.trim() || '🎮';
     const price = Number(document.getElementById('admPrice').value);
     const status = document.getElementById('admStatus').value;
+    const desc = document.getElementById('admDesc').value.trim();
+    const features = document.getElementById('admFeatures').value.trim();
+    
     let ok = true;
     if (!title) { setFieldError('admTitle', 'admTitleErr', 'Введите название'); ok = false; }
     if (!price || price <= 0) { setFieldError('admPrice', 'admPriceErr', 'Цена должна быть больше 0'); ok = false; }
@@ -1352,16 +989,14 @@ function handleSaveGame() {
     const games = getGames();
     if (editingGameId) {
         const idx = games.findIndex(g => g.id === editingGameId);
-        if (idx >= 0) games[idx] = { id: editingGameId, title, price, status };
+        if (idx >= 0) games[idx] = { id: editingGameId, title, genre, emoji, price, status, desc, features };
         showToast('Игра обновлена', 'success');
     } else {
         const nextId = games.length ? Math.max(...games.map(g => g.id)) + 1 : 1;
-        games.push({ id: nextId, title, price, status });
+        games.push({ id: nextId, title, genre, emoji, price, status, desc, features });
         showToast('Игра добавлена', 'success');
     }
-    saveGames(games);
-    resetAdminForm();
-    renderAdminAll();
+    saveGames(games); resetAdminForm(); renderAdminAll(); renderGames();
 }
 
 function handleToggleStatus(id) {
@@ -1369,15 +1004,14 @@ function handleToggleStatus(id) {
     const g = games.find(x => x.id === id);
     if (!g) return;
     g.status = g.status === 'Активна' ? 'Скрыта' : 'Активна';
-    saveGames(games);
-    renderAdminAll();
+    saveGames(games); renderAdminAll(); renderGames();
 }
 
 function handleDeleteGame(id) {
     if (!confirm('Удалить игру #' + id + '?')) return;
     saveGames(getGames().filter(g => g.id !== id));
     if (editingGameId === id) resetAdminForm();
-    renderAdminAll();
+    renderAdminAll(); renderGames();
 }
 
 function handleDeleteUser(index) {
@@ -1385,31 +1019,26 @@ function handleDeleteUser(index) {
     const u = users[index];
     if (!u) return;
     if (!confirm('Удалить пользователя «' + u.name + '»?')) return;
-    users.splice(index, 1);
-    saveUsers(users);
-    renderAdminAll();
+    users.splice(index, 1); saveUsers(users); renderAdminAll();
 }
 
+/* ============================================================
+   ИНИЦИАЛИЗАЦИЯ
+   ============================================================ */
 window.addEventListener('hashchange', () => {
     const id = location.hash.replace('#', '') || 'home';
     showPage(id);
 });
 
 window.addEventListener('DOMContentLoaded', () => {
-    const regBtn = document.getElementById('registerBtn');
-    if (regBtn) regBtn.addEventListener('click', handleRegister);
-
-    const loginBtn = document.getElementById('loginBtn');
-    if (loginBtn) loginBtn.addEventListener('click', handleLogin);
-
-    const regP2 = document.getElementById('regPassword2');
-    if (regP2) regP2.addEventListener('keydown', e => { if (e.key === 'Enter') handleRegister(); });
-
-    const loginP = document.getElementById('loginPassword');
-    if (loginP) loginP.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+    const regBtn = document.getElementById('registerBtn'); if (regBtn) regBtn.addEventListener('click', handleRegister);
+    const loginBtn = document.getElementById('loginBtn'); if (loginBtn) loginBtn.addEventListener('click', handleLogin);
+    const regP2 = document.getElementById('regPassword2'); if (regP2) regP2.addEventListener('keydown', e => { if (e.key === 'Enter') handleRegister(); });
+    const loginP = document.getElementById('loginPassword'); if (loginP) loginP.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
 
     renderAuthNav();
     applyTheme();
+    getGames();
 
     const id = location.hash.replace('#', '') || 'home';
     showPage(id);
