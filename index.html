@@ -406,11 +406,21 @@
                 <input type="email" id="profileEmail" disabled>
             </div>
             <div class="form-group">
-                <label>Баланс</label>
-                <input type="text" id="profileBalance" disabled>
+                <label>Текущий баланс</label>
+                <input type="text" id="profileBalance" disabled style="font-size: 1.2rem; font-weight: bold; color: var(--success);">
             </div>
-            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
-                <button type="button" class="btn" onclick="handleProfileSave()">Сохранить</button>
+            
+            <!-- НОВЫЙ БЛОК: ПОПОЛНЕНИЕ БАЛАНСА -->
+            <div class="form-group" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
+                <label>Пополнить баланс (₽)</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="number" id="topUpAmount" placeholder="Например, 1000" min="1" style="flex: 1;">
+                    <button type="button" class="btn" onclick="handleTopUp()">Пополнить</button>
+                </div>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:24px;">
+                <button type="button" class="btn btn--ghost" onclick="handleProfileSave()">Сохранить имя</button>
                 <button type="button" class="btn btn--danger" onclick="handleLogout()">Выйти</button>
             </div>
         </div>
@@ -881,6 +891,36 @@ function handleProfileSave() {
     const idx = users.findIndex(u => u.email === user.email);
     if (idx >= 0) { users[idx].name = newName; saveUsers(users); saveSession(users[idx]); }
     renderAuthNav(); showToast('Данные сохранены', 'success'); renderProfile();
+}
+
+/* ============================================================
+   ПОПОЛНЕНИЕ БАЛАНСА
+   ============================================================ */
+function handleTopUp() {
+    const user = getSession();
+    if (!user) return showPage('login');
+
+    const amountInput = document.getElementById('topUpAmount');
+    const amount = Number(amountInput.value);
+
+    if (!amount || amount <= 0) {
+        showToast('Введите корректную сумму для пополнения', 'error');
+        return;
+    }
+
+    user.balance = (user.balance || 0) + amount;
+
+    const users = getUsers();
+    const idx = users.findIndex(u => u.email === user.email);
+    if (idx >= 0) {
+        users[idx] = user;
+        saveUsers(users);
+    }
+    saveSession(user);
+
+    amountInput.value = '';
+    renderProfile();
+    showToast(`Баланс успешно пополнен на ${amount.toLocaleString('ru-RU')} ₽!`, 'success');
 }
 
 /* ============================================================
